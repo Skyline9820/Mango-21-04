@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Invierte en un modelo de negocio listo para operar con las franquicias de Mango BC y Hot Rolls. Modelo probado, producto incluido y soporte corporativo.">
+    <meta name="theme-color" content="#1C1C1C">
+    
+    <title>Franquicias | Mango BC</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* PALETA MANGO BC */
+            --mango: #fdea14; 
+            --dark: #1C1C1C;  
+            --white: #FFFFFF;
+            --light-bg: #F5F5F7; 
+            
+            /* PALETA HOT ROLLS */
+            --hr-green: #0A5239; 
+            --hr-orange: #FF5722; 
+
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark);
+            font-family: 'Open Sans', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-font-smoothing: antialiased; /* Mejora lectura en pantallas retina */
+        }
+
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+
+        /* =========================================================
+           ANIMACIONES GLOBALES
+           ========================================================= */
+        @keyframes pulseBg {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes marqueeReverse { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+        @keyframes float { 0% { transform: translateY(0px) rotate(-3deg); } 50% { transform: translateY(-15px) rotate(0deg); } 100% { transform: translateY(0px) rotate(-3deg); } }
+
+        /* REVEAL ANIMATIONS optimizadas para GPU */
+        .reveal { 
+            opacity: 0; transform: translateY(50px) scale(0.95); 
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+            will-change: opacity, transform;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+        .delay-1 { transition-delay: 0.15s; } .delay-2 { transition-delay: 0.3s; }
+
+        /* =========================================================
+           NAVEGACIÓN EFECTO CRISTAL 
+           ========================================================= */
+        nav {
+            position: fixed; width: 90%; top: 20px; left: 5%; padding: 15px 30px; 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); 
+            border-radius: 100px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            transition: transform 0.4s ease, background-color 0.4s ease;
+        }
+        .logo { text-decoration: none; display: flex; align-items: center; z-index: 1002; }
+        .nav-logo { height: 35px; width: auto; object-fit: contain; }
+        
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; padding: 5px; /* Aumenta el área táctil */}
+        .nav-links a:hover { color: #888; }
+        
+        .nav-cta { background: var(--dark); color: var(--white) !important; padding: 12px 28px; border-radius: 50px; transition: background-color 0.4s, color 0.4s, transform 0.4s;}
+        .nav-cta:hover { background: var(--mango); color: var(--dark) !important; transform: scale(1.05); box-shadow: 0 10px 20px rgba(253, 234, 20, 0.4);}
+
+        .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1002; padding: 10px; /* Área táctil más grande */ margin-right: -10px;}
+        .hamburger span { width: 30px; height: 3px; background-color: var(--dark); border-radius: 3px; transition: transform 0.4s, opacity 0.4s; }
+
+        /* BOTONES GLOBALES */
+        .btn-mango { background: var(--mango); color: var(--dark); padding: 18px 40px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 900; text-decoration: none; text-transform: uppercase; font-size: 0.9rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 20px rgba(253, 234, 20, 0.3); display: inline-block; text-align: center; border: none; cursor: pointer; letter-spacing: 1px;}
+        .btn-mango:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(253, 234, 20, 0.6); background: var(--white); }
+        
+        .btn-dark { background: var(--dark); color: var(--white); padding: 18px 40px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 900; text-decoration: none; text-transform: uppercase; font-size: 0.9rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; text-align: center; border: none; cursor: pointer; letter-spacing: 1px;}
+        .btn-dark:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); background: #333; color: var(--mango); }
+
+        /* =========================================================
+           1. HERO FRANQUICIAS (OSCURO) - WOW FACTOR
+           ========================================================= */
+        .hero-franq {
+            background-color: var(--dark); 
+            padding: 220px 5% 120px; 
+            min-height: 90vh; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            font-size: clamp(150px, 20vw, 300px);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.05);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0; white-space: nowrap;
+            animation: pulseBg 4s infinite alternate ease-in-out;
+            pointer-events: none; user-select: none;
+            will-change: transform;
+        }
+
+        .hero-franq::after {
+            content: ''; position: absolute; width: 120vw; height: 120vw; max-width: 1200px; max-height: 1200px;
+            background: radial-gradient(circle, rgba(253, 234, 20, 0.08) 0%, transparent 60%);
+            top: -30%; left: 50%; transform: translateX(-50%); z-index: 0; pointer-events: none;
+        }
+        
+        .hero-franq-content { z-index: 1; position: relative; max-width: 1100px; width: 100%; }
+        
+        .hero-franq-content h1 {
+            font-size: clamp(1rem, 2vw, 1.4rem); color: var(--mango); letter-spacing: 6px;
+            text-transform: uppercase; margin-bottom: 25px; font-weight: 800; text-shadow: 0 0 20px rgba(253,234,20,0.5);
+        }
+        .hero-franq-content h2 {
+            font-size: clamp(2.5rem, 5vw, 5rem); color: var(--white); font-weight: 900; 
+            line-height: 1; margin: 0 auto 30px auto; max-width: 1000px; text-transform: uppercase;
+            letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .hero-franq-content p {
+            font-size: 1.3rem; color: #DDD; line-height: 1.8; max-width: 800px; 
+            margin: 0 auto 50px auto; font-weight: 300;
+        }
+
+        .hero-bullets { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 60px; }
+        .hero-bullet-item {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 30px; border-radius: 50px; color: var(--white); font-size: 1rem;
+            font-weight: 700; display: flex; align-items: center; gap: 12px;
+            backdrop-filter: blur(10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .hero-bullet-item::before { content: '✓'; color: var(--mango); font-weight: 900; font-size: 1.2rem; text-shadow: 0 0 10px var(--mango);}
+
+        /* =========================================================
+           2. QUÉ HACEMOS (METODOLOGÍA) -> LIGHT (GLOW)
+           ========================================================= */
+        .que-hacemos { background: var(--light-bg); color: var(--dark); padding: 150px 5%; text-align: center; position: relative; z-index: 2;}
+        .qh-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; margin-bottom: 80px; text-transform: uppercase; letter-spacing: -1px;}
+        .qh-title span { color: var(--mango); }
+        
+        .qh-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1300px; margin: 0 auto; }
+        
+        .qh-card {
+            background: var(--white); border: 1px solid rgba(0,0,0,0.05); border-radius: 25px; padding: 50px 30px;
+            box-shadow: var(--shadow-soft); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: left; position: relative; overflow: hidden; z-index: 1;
+        }
+        .qh-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(253,234,20,0.15) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.5s ease; z-index: -1; pointer-events: none;
+        }
+        .qh-card:hover::before { opacity: 1; transform: scale(1.2); }
+        .qh-card:hover { transform: translateY(-15px); border-color: var(--mango); box-shadow: 0 30px 60px rgba(253, 234, 20, 0.15); }
+        
+        .qh-icon {
+            width: 70px; height: 70px; background: var(--dark); border-radius: 20px; display: flex;
+            justify-content: center; align-items: center; font-size: 1.8rem; font-weight: 900; margin-bottom: 30px; color: var(--mango);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.4s, background 0.4s;
+        }
+        .qh-card:hover .qh-icon { transform: scale(1.1) rotate(-5deg); background: var(--mango); color: var(--dark);}
+        
+        .qh-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px;}
+        .qh-card p { color: #666; font-size: 1rem; line-height: 1.7; font-weight: 400;}
+
+        /* =========================================================
+           3. CASO DE ÉXITO: HOT ROLLS -> BRANDING AJEDREZ TRIPPY
+           ========================================================= */
+        .hot-rolls-section { 
+            background: var(--hr-green); 
+            padding: 180px 5% 280px; 
+            position: relative; 
+            overflow: hidden; 
+            z-index: 1;
+        }
+
+        .hot-rolls-section::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background-color: var(--hr-green);
+            background-image: conic-gradient(#1b7a53 90deg, transparent 90deg 180deg, #1b7a53 180deg 270deg, transparent 270deg);
+            background-size: 150px 150px;
+            transform: perspective(1000px) rotateX(35deg) rotateY(-15deg) rotateZ(-10deg) scale(1.2);
+            z-index: -3;
+        }
+
+        .hot-rolls-section::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(10, 82, 57, 0.1) 0%, rgba(10, 82, 57, 0.95) 100%);
+            z-index: -2; pointer-events: none;
+        }
+
+        .hr-yellow-wave {
+            position: absolute; bottom: 0; left: -10%; width: 120%; height: 150px;
+            background: var(--dark); 
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0; z-index: -1;
+        }
+
+        .hr-spinning-badge {
+            position: absolute; top: 15%; right: 5%; width: 160px; height: 160px;
+            background: var(--mango); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 0.9rem; text-align: center; color: var(--dark); text-transform: uppercase;
+            animation: spin 12s linear infinite; box-shadow: 0 15px 30px rgba(0,0,0,0.4); z-index: 3;
+            border: 4px dashed var(--dark); line-height: 1.2;
+        }
+        
+        .hr-marquee-wrap {
+            position: absolute; width: 120%; left: -10%; height: 50px; background: var(--mango);
+            display: flex; align-items: center; overflow: hidden; z-index: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .hr-marquee-top { top: 5%; transform: rotate(-2deg); }
+        .hr-marquee-content { display: flex; width: max-content; animation: marquee 20s linear infinite; }
+        .hr-marquee-content span { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; color: var(--dark); padding: 0 20px; white-space: nowrap; letter-spacing: 2px; }
+
+        .hr-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 2;}
+        
+        .hr-text h2 { font-size: clamp(3.5rem, 7vw, 6rem); color: var(--mango); font-weight: 900; line-height: 0.9; margin-bottom: 20px; text-transform: uppercase; letter-spacing: -3px; text-shadow: 4px 4px 0px var(--dark);}
+        .hr-text h2 span { color: var(--white); display: block; font-size: clamp(1.8rem, 3.5vw, 3rem); letter-spacing: -1px; margin-top: 10px; text-shadow: 3px 3px 0px var(--dark);}
+        
+        .hr-text p.hr-highlight { color: var(--white); font-size: 1.4rem; font-weight: 800; line-height: 1.6; margin-bottom: 25px; background: var(--dark); display: inline-block; padding: 10px 20px; transform: rotate(-1deg);}
+        .hr-text p.hr-desc { color: #A8D5BA; font-size: 1.15rem; line-height: 1.8; margin-bottom: 40px; font-weight: 400;}
+        
+        .hr-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; perspective: 1000px;}
+        
+        .hr-stat-box {
+            background: var(--mango); border: 4px solid var(--dark); padding: 40px 30px; border-radius: 0px; 
+            box-shadow: 12px 12px 0px var(--dark); transform: rotate(-3deg); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center; position: relative;
+        }
+        .hr-stat-box:nth-child(even) { transform: rotate(3deg); background: var(--white);}
+        .hr-stat-box:hover { transform: scale(1.08) rotate(0deg) translateY(-10px); box-shadow: 20px 20px 0px var(--dark); z-index: 2;}
+        
+        .hr-stat-box h4 { color: var(--dark); font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 900; margin-bottom: 5px; line-height: 1; letter-spacing: -2px;}
+        .hr-stat-box p { color: var(--dark); font-size: 1rem; font-weight: 800; text-transform: uppercase; margin: 0; letter-spacing: 1px;}
+
+        /* =========================================================
+           4. HOT ROLLS: OPERACIÓN IMPARABLE (DARK BRUTALISM)
+           ========================================================= */
+        .hr-operation-section {
+            background: var(--dark); padding: 100px 5% 150px; position: relative; z-index: 2; overflow: hidden;
+        }
+        .op-container { max-width: 1300px; margin: 0 auto; text-align: center; }
+        
+        .op-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; margin-bottom: 15px;}
+        .op-title span { color: var(--hr-green); -webkit-text-stroke: 1px var(--mango); }
+        .op-desc { color: #AAA; font-size: 1.2rem; max-width: 800px; margin: 0 auto 60px; line-height: 1.7; }
+
+        .op-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .op-card {
+            background: #111; border: 2px solid #333; padding: 40px; text-align: left;
+            position: relative; transition: all 0.3s ease;
+        }
+        .op-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 10px; height: 100%; background: var(--hr-green); transition: width 0.3s;
+        }
+        .op-card:hover { border-color: var(--mango); transform: translateX(10px); }
+        .op-card:hover::before { width: 100%; background: var(--mango); z-index: 0; }
+        
+        .op-card h3 { font-size: 1.8rem; color: var(--white); font-weight: 900; margin-bottom: 15px; position: relative; z-index: 1; text-transform: uppercase; letter-spacing: -1px;}
+        .op-card p { color: #888; font-size: 1rem; line-height: 1.6; position: relative; z-index: 1; font-weight: 600;}
+        .op-card:hover h3, .op-card:hover p { color: var(--dark); }
+
+        /* =========================================================
+           5. HOT ROLLS: EXPANSIÓN GLOBAL (AJEDREZ AMARILLO)
+           ========================================================= */
+        .hr-expansion-section {
+            background: var(--mango); padding: 150px 5%; position: relative; overflow: hidden; z-index: 1;
+        }
+        .hr-expansion-section::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background-color: var(--mango);
+            background-image: conic-gradient(var(--dark) 90deg, transparent 90deg 180deg, var(--dark) 180deg 270deg, transparent 270deg);
+            background-size: 120px 120px;
+            transform: perspective(1000px) rotateX(-25deg) rotateY(10deg) scale(1.2);
+            z-index: -3; opacity: 0.12; 
+        }
+        
+        .exp-container { max-width: 1300px; margin: 0 auto; text-align: center; }
+        .exp-header { margin-bottom: 60px; }
+        .exp-header h2 { font-size: clamp(3rem, 6vw, 5.5rem); color: var(--dark); font-weight: 900; line-height: 0.95; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 20px;}
+        .exp-header p { font-size: 1.5rem; color: var(--dark); font-weight: 800; background: var(--white); display: inline-block; padding: 10px 30px; transform: rotate(-2deg); box-shadow: 6px 6px 0px rgba(0,0,0,0.8);}
+
+        .exp-phases { display: flex; justify-content: center; gap: 40px; margin-bottom: 80px; flex-wrap: wrap;}
+        .phase-box { background: var(--dark); color: var(--white); padding: 30px 40px; border-radius: 20px; text-align: left; flex: 1; min-width: 300px; box-shadow: 10px 10px 0px rgba(0,0,0,0.2); transform: rotate(1deg);}
+        .phase-box:nth-child(2) { transform: rotate(-1deg); background: var(--white); color: var(--dark);}
+        .phase-box h4 { font-size: 1.4rem; color: var(--mango); margin-bottom: 10px; font-weight: 900; text-transform: uppercase;}
+        .phase-box:nth-child(2) h4 { color: var(--hr-green); }
+        .phase-box p { font-size: 1.1rem; font-weight: 700; line-height: 1.5;}
+
+        .exp-formats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; perspective: 1000px;}
+        .exp-format-card {
+            background: var(--white); border: 4px solid var(--dark); padding: 30px 20px;
+            box-shadow: 8px 8px 0px var(--dark); animation: float 6s ease-in-out infinite;
+        }
+        .exp-format-card:nth-child(even) { animation-delay: 1s; background: var(--dark); color: var(--mango); }
+        .exp-format-card:nth-child(even) h3 { color: var(--mango); }
+        .exp-format-card h3 { font-size: 1.6rem; color: var(--dark); font-weight: 900; text-transform: uppercase; margin-bottom: 10px;}
+        .exp-format-card p { font-size: 0.95rem; font-weight: 700; }
+
+        /* =========================================================
+           6. INFRAESTRUCTURA CORPORATIVA -> LIGHT
+           ========================================================= */
+        .infra-section { background: var(--white); padding: 150px 5%; text-align: center; z-index: 2; position: relative; }
+        .infra-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: var(--dark); margin-bottom: 20px; text-transform: uppercase; letter-spacing: -1px;}
+        .infra-title span { color: var(--mango); }
+        .infra-desc { font-size: 1.25rem; color: #666; max-width: 800px; margin: 0 auto 80px; line-height: 1.7; }
+        
+        .infra-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; max-width: 1300px; margin: 0 auto; }
+        .infra-item { padding: 40px 20px; background: var(--light-bg); border-radius: 20px; border: 1px solid rgba(0,0,0,0.03); transition: transform 0.4s, background 0.4s;}
+        .infra-item:hover { transform: translateY(-10px); background: var(--dark); }
+        .infra-item h3 { font-size: 4rem; color: var(--mango); font-weight: 900; margin-bottom: 10px; line-height: 1; letter-spacing: -2px;}
+        .infra-item p { color: #555; font-size: 1rem; font-weight: 800; text-transform: uppercase; transition: color 0.4s;}
+        .infra-item:hover p { color: var(--white); }
+
+        /* FOOTER SIMPLIFICADO */
+        footer { background: var(--dark); padding: 80px 5% 40px; color: var(--white); border-top: 1px solid rgba(255,255,255,0.1);}
+        .footer-bottom { text-align: center; color: #666; font-size: 0.8rem; margin-top: 20px;}
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .qh-grid { grid-template-columns: repeat(2, 1fr); }
+            .hr-container { grid-template-columns: 1fr; gap: 80px; }
+            .hr-text { text-align: center; display: flex; flex-direction: column; align-items: center;}
+            .hr-formats { justify-content: center; }
+            .hr-spinning-badge { display: none; } 
+            .op-grid { grid-template-columns: 1fr; }
+            .exp-formats-grid { grid-template-columns: repeat(2, 1fr); }
+            .infra-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            nav { width: 100%; top: 0; left: 0; border-radius: 0; padding: 15px 5%; }
+            .hamburger { display: flex; }
+            .nav-links { position: fixed; top: 0; left: 100%; width: 100%; height: 100vh; background: var(--dark); flex-direction: column; justify-content: center; align-items: center; gap: 40px; transition: left 0.4s ease; z-index: 1001; }
+            .nav-links a { color: var(--white); font-size: 1.2rem;}
+            .nav-links.active { left: 0; }
+            .qh-grid { grid-template-columns: 1fr; }
+            .hr-stats-grid { grid-template-columns: 1fr; }
+            .hr-stat-box { transform: rotate(0deg) !important; margin-bottom: 15px; box-shadow: 8px 8px 0px var(--dark);}
+            .hero-bg-text { font-size: 150px; }
+            .exp-formats-grid { grid-template-columns: 1fr; }
+            .exp-phases { flex-direction: column; gap: 20px; }
+            .infra-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo" aria-label="Ir al inicio de Mango BC">
+            <img src="mbc.png" alt="Logotipo Mango BC" class="nav-logo">
+        </a>
+        <div class="hamburger" id="hamburger" role="button" aria-label="Abrir menú" tabindex="0">
+            <span style="background:var(--white);"></span>
+            <span style="background:var(--white);"></span>
+            <span style="background:var(--white);"></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="distribuidores.html">Soy distribuidor</a>
+            <a href="emprendedores.html">Retail / Foodservice</a>
+            <a href="#hotrolls" class="nav-cta">HOT ROLLS</a>
+        </div>
+    </nav>
+
+    <section class="hero-franq" id="inicio">
+        <div class="hero-bg-text">FRANQUICIAS</div>
+        <div class="hero-franq-content reveal">
+            <h1>Oportunidad de Inversión</h1>
+            <h2>INVIERTE EN UN MODELO <br><span>LISTO PARA OPERAR</span></h2>
+            <p>Creamos franquicias donde desarrollamos el producto, el concepto y la operación, entregándote una máquina de ventas diseñada para escalar rápido.</p>
+            
+            <div class="hero-bullets">
+                <div class="hero-bullet-item">Modelo probado</div>
+                <div class="hero-bullet-item">Producto incluido</div>
+                <div class="hero-bullet-item">Soporte corporativo</div>
+            </div>
+            
+            <a href="#hotrolls" class="btn-mango">Descubrir Hot Rolls</a>
+        </div>
+    </section>
+
+    <section class="que-hacemos reveal delay-1">
+        <h2 class="qh-title">Nuestra <span>Metodología</span></h2>
+        
+        <div class="qh-grid">
+            <div class="qh-card">
+                <div class="qh-icon">1</div>
+                <h3>Desarrollo</h3>
+                <p>Creamos productos alineados a tendencias reales del mercado, listos para competir desde el día uno.</p>
+            </div>
+            <div class="qh-card">
+                <div class="qh-icon">2</div>
+                <h3>Producción</h3>
+                <p>Fabricamos desde nuestra planta certificada garantizando abasto nacional e internacional continuo.</p>
+            </div>
+            <div class="qh-card">
+                <div class="qh-icon">3</div>
+                <h3>Marca</h3>
+                <p>Diseñamos conceptos visuales competitivos, disruptivos y con alta retención en el consumidor.</p>
+            </div>
+            <div class="qh-card">
+                <div class="qh-icon">4</div>
+                <h3>Modelo</h3>
+                <p>Convertimos ese producto ganador en un negocio "llave en mano" listo para generar rendimientos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="hot-rolls-section" id="hotrolls">
+        
+        <div class="hr-yellow-wave"></div>
+
+        <div class="hr-marquee-wrap hr-marquee-top">
+            <div class="hr-marquee-content" aria-hidden="true">
+                <span>🔥 CRÚJELO 🔥 LA REVOLUCIÓN FAST FOOD 🔥 HOT ROLLS 🔥 FORMATO GLOBAL 🔥 CRÚJELO 🔥 LA REVOLUCIÓN FAST FOOD 🔥 HOT ROLLS 🔥 FORMATO GLOBAL</span>
+                <span>🔥 CRÚJELO 🔥 LA REVOLUCIÓN FAST FOOD 🔥 HOT ROLLS 🔥 FORMATO GLOBAL 🔥 CRÚJELO 🔥 LA REVOLUCIÓN FAST FOOD 🔥 HOT ROLLS 🔥 FORMATO GLOBAL</span>
+            </div>
+        </div>
+
+        <div class="hr-spinning-badge">100%<br>ESCALABLE<br>GLOBAL</div>
+
+        <div class="hr-container">
+            <div class="hr-text reveal">
+                <h2>HOT ROLLS <br><span>LA REVOLUCIÓN FAST FOOD</span></h2>
+                <p class="hr-highlight">Un producto que rompe categorías. Diseñado para velocidad industrial y capacidad de crear antojo extremo.</p>
+                <p class="hr-desc">Menos de 5 minutos de servicio. Cero barreras culturales. No competimos en el juego de otros, creamos el nuestro.</p>
+                
+                <div style="margin-top: 50px;">
+                    <a href="mailto:socios@mangobc.com" class="btn-mango" style="box-shadow: 8px 8px 0px rgba(0,0,0,0.5);">Quiero invertir</a>
+                </div>
+            </div>
+            
+            <div class="hr-stats-grid reveal delay-1">
+                <div class="hr-stat-box">
+                    <h4>&lt;5<span style="font-size: 1.5rem;">MIN</span></h4>
+                    <p>Servicio express</p>
+                </div>
+                <div class="hr-stat-box">
+                    <h4>100+</h4>
+                    <p>Tickets diarios</p>
+                </div>
+                <div class="hr-stat-box">
+                    <h4>$139</h4>
+                    <p>Ticket Promedio</p>
+                </div>
+                <div class="hr-stat-box">
+                    <h4>4m²</h4>
+                    <p>Formatos desde</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hr-operation-section">
+        <div class="op-container">
+            <div class="reveal">
+                <h2 class="op-title">Operación <span>Imparable</span></h2>
+                <p class="op-desc">Ingeniería aplicada a Fast Food. Creamos el sistema operativo más eficiente del mercado. Casi imposible fallar, y ese es el secreto para escalar globalmente.</p>
+            </div>
+
+            <div class="op-grid reveal delay-1">
+                <div class="op-card">
+                    <h3>Cero Barreras</h3>
+                    <p>Equipos de última generación 110V/220V. Opere donde sea: <strong>Sin extracción y sin trampa de grasa.</strong></p>
+                </div>
+                <div class="op-card">
+                    <h3>Fast Training</h3>
+                    <p>Procesos 100% estandarizados y capacitación express. El modelo no depende del chef, depende del sistema.</p>
+                </div>
+                <div class="op-card">
+                    <h3>Low Capex</h3>
+                    <p>Alta tecnología con operación intuitiva. Margen saludable y de firma a operación en semanas, no meses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hr-expansion-section">
+        <div class="exp-container">
+            <div class="exp-header reveal">
+                <h2>Plan de Expansión <br>Agresivo</h2>
+                <p>META: 300 Puntos de Venta en 5 años</p>
+            </div>
+
+            <div class="exp-phases reveal delay-1">
+                <div class="phase-box">
+                    <h4>FASE 1: Todo México</h4>
+                    <p>De Tijuana a Mérida. Cobertura Nacional Completa con socios estratégicos.</p>
+                </div>
+                <div class="phase-box">
+                    <h4>FASE 2: Internacional</h4>
+                    <p>USA (Mercado Hispano y Ciudades Cosmopolitas) + LATAM (Cultura Urbana).</p>
+                </div>
+            </div>
+
+            <div class="exp-formats-grid reveal delay-2">
+                <div class="exp-format-card">
+                    <h3>Kiosko</h3>
+                    <p>4 - 8 m² | Flujo rápido</p>
+                </div>
+                <div class="exp-format-card">
+                    <h3>Food Court</h3>
+                    <p>Alto volumen de plazas</p>
+                </div>
+                <div class="exp-format-card">
+                    <h3>Local</h3>
+                    <p>Comercial | Stand Alone</p>
+                </div>
+                <div class="exp-format-card">
+                    <h3>Masivos</h3>
+                    <p>Eventos, Estadios, Festivales</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="infra-section reveal">
+        <h2 class="infra-title">El Respaldo <br><span>Corporativo</span></h2>
+        <p class="infra-desc">Hot Rolls no es un proyecto, es parte de un ecosistema empresarial consolidado. Grupo Díaz te garantiza solidez, I+D culinario y expansión estratégica comprobada.</p>
+        
+        <div class="infra-grid">
+            <div class="infra-item">
+                <h3 class="counter" data-target="175">0</h3>
+                <p>K+ Puntos de Venta</p>
+            </div>
+            <div class="infra-item">
+                <h3 class="counter" data-target="400">0</h3>
+                <p>+ Rutas de distribución</p>
+            </div>
+            <div class="infra-item">
+                <h3>3</h3>
+                <p>Regiones (MX, USA, LATAM)</p>
+            </div>
+            <div class="infra-item">
+                <h3>Lab</h3>
+                <p>De innovación Culinaria</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-bottom">
+            © 2026 MANGO BUSINESS CENTER | Desarrollo de Franquicias
+        </div>
+    </footer>
+
+    <script>
+        // Efecto Parallax optimizado para rendimiento y deshabilitado en móviles
+        let parallaxTicking = false;
+        window.addEventListener('mousemove', function(e) {
+            // Solo ejecutamos parallax en pantallas mayores a 768px (Desktop/Tablets grandes)
+            if (window.innerWidth > 768) {
+                if (!parallaxTicking) {
+                    window.requestAnimationFrame(function() {
+                        const bgText = document.querySelector('.hero-bg-text');
+                        if (bgText) {
+                            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                            bgText.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+                        }
+                        parallaxTicking = false;
+                    });
+                    parallaxTicking = true;
+                }
+            }
+        });
+
+        // Menú Hamburguesa con Accesibilidad (teclado enter/espacio)
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            // Actualizamos accesibilidad
+            const expanded = hamburger.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', expanded);
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        // Animaciones Reveal y Contadores
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                
+                // Contadores numéricos
+                if(entry.target.classList.contains('infra-section')) {
+                    const counters = document.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const speed = target / 30; 
+                        const updateCount = () => {
+                            const current = +counter.innerText;
+                            if (current < target) {
+                                counter.innerText = Math.ceil(current + speed);
+                                setTimeout(updateCount, 40);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCount();
+                    });
+                }
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
