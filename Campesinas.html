@@ -55,18 +55,25 @@
 
         h1, h2, h3, h4, .serif { font-family: 'Cormorant Garamond', serif; }
 
-        /* NAV GLASSMORPHISM */
+/* NAV GLASSMORPHISM */
         nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 6%;
+            position: fixed; top: 0; width: 100%; 
+            padding: 12px 6%; /* <-- Redujimos el padding original (antes 20px) */
             display: flex; justify-content: space-between; align-items: center;
             z-index: 1000; background: rgba(251, 249, 246, 0.75);
             backdrop-filter: blur(25px) saturate(1.2); border-bottom: 1px solid rgba(197, 140, 70, 0.1);
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), padding 0.4s ease, background 0.4s;
         }
-        nav.scrolled { padding: 12px 6%; background: rgba(251, 249, 246, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+        nav.scrolled { 
+            padding: 8px 6%; /* <-- Al hacer scroll se hace aún más delgado (antes 12px) */
+            background: rgba(251, 249, 246, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+        }
         nav.hidden { transform: translateY(-100%); }
 
-        .nav-brand img { height: 85px; width: auto; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .nav-brand img { 
+            height: 60px; /* <-- Redujimos el logo (antes 85px) para que el nav no se estire */
+            width: auto; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
         .nav-brand:hover img { transform: scale(1.05); filter: drop-shadow(0 5px 15px rgba(197,140,70,0.2)); }
         
         .btn-primary {
@@ -210,15 +217,18 @@
             width: 100px;
         }
 
-        /* --- BENTO GRID ARREGLADO (2 Columnas) --- */
-        .section-padding { padding: 140px 6%; }
-        .section-header { text-align: center; margin-bottom: 90px; max-width: 800px; margin-inline: auto; }
+        /* --- /* --- BENTO GRID ARREGLADO Y MÁS COMPACTO --- */
+        .section-padding { padding: 100px 6%; } /* <-- Redujimos de 140px a 100px */
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 800px; margin-inline: auto; } /* <-- Redujimos margen de 90px a 60px */
         .section-header h2 { font-size: clamp(2.8rem, 4vw, 4.5rem); font-weight: 500; line-height: 1.05; margin-top: 15px; }
 
-        /* Cuadrícula limpia a 2 columnas para 4 tarjetas */
-        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 1100px; margin: 0 auto; }
+        /* Cuadrícula menos ancha y con menos separación */
+        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; max-width: 1000px; margin: 0 auto; }
+        
         .bento-card {
-            background: var(--c-blanco); padding: 60px 50px; border-radius: 20px;
+            background: var(--c-blanco); 
+            padding: 45px 40px; /* <-- AQUÍ ESTÁ LA CLAVE: Redujimos de 60px a 45px, haciendo la caja mucho más bajita */
+            border-radius: 20px;
             box-shadow: var(--shadow-soft); transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: center;
         }
@@ -229,8 +239,9 @@
         .bento-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-color: rgba(197, 140, 70, 0.15); }
         .bento-card:hover::after { transform: scaleX(1); transform-origin: left; }
         
-        .bento-card h3 { font-size: 2.3rem; margin-bottom: 20px; color: var(--c-brand-dark); font-weight: 500; }
-        .bento-card p { font-size: 1.05rem; line-height: 1.7; color: #5a4639; font-weight: 300; position: relative; z-index: 2;}
+        /* Ajustamos la tipografía para el nuevo tamaño de tarjeta */
+        .bento-card h3 { font-size: 2rem; margin-bottom: 15px; color: var(--c-brand-dark); font-weight: 500; } /* <-- Letra un poco más chica */
+        .bento-card p { font-size: 1rem; line-height: 1.6; color: #5a4639; font-weight: 300; position: relative; z-index: 2;}
         
         /* Tarjetas anchas toman las dos columnas */
         .card-large { grid-column: span 2; background: var(--c-cacao); color: var(--c-crema); }
@@ -457,14 +468,13 @@
                     <p>Elaboramos productos con avena, nuez, arándano o dátil. Garantizamos un alto contenido en fibra y energía natural para tu día.</p>
                 </div>
                 
-                <div class="bento-card card-large fade-up" style="transition-delay: 0.2s;">
-                    <h3>El Centro de la Familia</h3>
-                    <p>Entendemos a la compradora planificada que busca calidad, rendimiento y confianza. Creemos que los mejores recuerdos se forjan compartiendo algo sencillo, cálido y delicioso.</p>
+                <div class="bento-card fade-up" style="transition-delay: 0.2s; background: var(--c-cacao); color: var(--c-crema);">
+                    <h3 style="color: var(--c-oro);">El Centro de la Familia</h3>
+                    <p style="color: rgba(255,255,255,0.75);">Entendemos a la compradora planificada que busca calidad, rendimiento y confianza. Creemos que los mejores recuerdos se forjan compartiendo algo sencillo, cálido y delicioso.</p>
                 </div>
-
-                <div class="bento-card card-large fade-up" style="background: var(--c-blanco); color: var(--c-cacao);">
-                    <h3 style="color: var(--c-brand-dark);">Orgullo en Anaquel</h3>
-                    <p style="color: #5a4639;">Nuestra imagen comunica artesanía y tradición. Contamos con exhibidores y tiras que destacan la calidez del producto en el punto de venta.</p>
+                <div class="bento-card fade-up" style="transition-delay: 0.3s;">
+                    <h3>Orgullo en Anaquel</h3>
+                    <p>Nuestra imagen comunica artesanía y tradición. Contamos con exhibidores y tiras que destacan la calidez del producto en el punto de venta.</p>
                 </div>
             </div>
         </section>
